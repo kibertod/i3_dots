@@ -1,0 +1,163 @@
+$surface-darkgrey: #20252b;
+$surface-fg: #949494;
+$surface-lightgrey: #3d464e;
+$surface-grey: #2b3238;
+$surface-red: #f87070;
+
+* { 
+  all: unset;
+}
+
+.layout-box {
+  font-family: FiraCode Nerd Font Mono;
+  color: rgba($surface-fg, 0.8);
+  padding: 10px;
+}
+
+.btns-box {
+  margin: 10px;
+  font-size: 25px;
+
+  button {
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: $surface-darkgrey;
+    transition: 500ms ease;
+
+    &:hover {
+      border-radius: 25px;
+      background-color: $surface-lightgrey;
+    }
+  }
+}
+
+
+.poweroff {
+  color: #B54036;
+}
+
+.reboot {
+  color: #DEA566;
+}
+
+.lock {
+  color: #6A7C93;
+}
+
+.cancel {
+  color: #7A7C57;
+}
+
+calendar {
+  padding: 5px;
+  border-radius: 10px;
+}
+
+calendar.header {
+  color: white;
+  font-weight: bold;
+}
+
+calendar {
+  color: #C4C4C4;
+  background: #101010;
+}
+
+calendar:selected {
+  color: #6A7C93;
+}
+
+scale trough {
+  background-color: #181818;
+  border-radius: 5px;
+  min-height: 10px;
+  min-width: 100px;
+  margin-left: 6px;
+}
+
+.bribar trough highlight {
+  background-color: #DEA566;
+  border-radius: 5px;
+}
+
+.volbar trough highlight {
+  background-color: #6A7C93;
+  border-radius: 5px;
+}
+
+.brightness-icon {
+  color: #DEA566;
+}
+
+.volume-icon {
+  color: #6A7C93;
+}
+
+.song_cover_art {
+	background-size: cover;	
+	background-position: center;
+	min-height: 24px;
+	min-width: 24px;
+  padding: 10px;
+}
+
+.song {
+  padding: 5px;
+	color: #7A7C57;
+	font-size : 23px;
+	font-weight : bold;
+  
+}
+
+.artist {
+  padding: 5px;
+	color: #6A7C93;
+	font-size : 19px;
+	font-weight : bold;
+}
+
+.song_btn_play {
+	color:#7A7C57;
+	font-size : 30px;
+  margin-right: 13px;
+}
+
+
+.song_btn_prev, .song_btn_next {
+	color: #7A7C57;
+	font-size : 20px;
+  margin-right: 6px;
+}
+
+.song-scale trough {
+  margin: 10px;
+  min-height: 10px;
+  min-width: 330px;
+  background-color: #181818;
+}
+
+.song-scale trough highlight {
+  background-color: #7A7C57;
+  border-radius: 5px;
+}
+
+
+.player {
+  background: #101010;
+  border-radius: 10px;
+  padding:  20px
+}
+
+.battery {
+  color: #DEA556;
+}
+
+.memory {
+  color: #7A7C57;
+}
+
+.cpu {
+  color: #6A7C93;
+}
+
+// vim:ft=scss

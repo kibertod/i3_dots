@@ -1,0 +1,203 @@
+(defpoll time :interval "1s" "date +'%H:%M'")
+(defpoll keyboard_layout :interval "0.1s" "xset -q|grep LED| awk '{ if ($10 == \"00001000\") { print \"ru\" }; if ($10 == \"00000000\") { print \"en\" }; if ($10 == \"00001001\") { print \"RU\" };if ($10 == \"00000001\") { print \"EN\" }; }'")
+(defpoll workspace :interval "0.1s" "i3-msg -t get_workspaces | jq '.[] | select(.focused==true).name' | cut -d '\"' -f2")
+(defpoll ws7-visible :interval "0.1s" "i3-msg -t get_workspaces | jq '.[] | select(.name==\"7\").visible'")
+(defpoll ws8-visible :interval "0.1s" "i3-msg -t get_workspaces | jq '.[] | select(.name==\"8\").visible'")
+(defpoll ws9-visible :interval "0.1s" "i3-msg -t get_workspaces | jq '.[] | select(.name==\"9\").visible'")
+(defpoll ws0-visible :interval "0.1s" "i3-msg -t get_workspaces | jq '.[] | select(.name==\"0\").visible'")
+
+(defwindow bar
+  :monitor 0
+  :stacking "fg"
+  :windowtype "toolbar"
+  :geometry (geometry :x "-14px" :width "101%" :y "-10px" :height "1%")
+  :style "padding-bottom: 1px"
+  (centerbox :style "background: #181818; margin: 10px 5px 10px; padding: 0; padding: 0 20px;"
+    (workspaces)
+    (box :space-evenly false :halign "center" :style "color: #7A7C57; font-family: FiraCode Nerd Font"
+      (button :onclick "playerctl --player=ncspot previous" "")
+      (button :style "margin: 0 20px" :onclick "playerctl --player=ncspot play-pause" song_status)
+      (button :onclick "playerctl --player=ncspot next" "")
+      (button :style "margin: 0 20px" :onclick "python ~/.config/eww/scripts/windowtoggle.py player" "${song_artist} - ${song}")
+    )
+    (box :hexpand true :halign "end" :space-evenly false
+        (stats)
+        (button :style "font-size: 18px; color: #949494; border-radius: 20px; padding: 0px 5px; margin: 0 10px; font-family: FiraCode Nerd Font"
+                "󰌌 ${keyboard_layout}")
+        (button :style "font-size: 16px; color: #949494; border-radius: 20px; padding: 2px 5px 0; font-family: FiraCode Nerd Font"
+                :onclick "python ~/.config/eww/scripts/windowtoggle.py calendar" " ${time}")
+        (box :space-evenly false :style "border-radius: 20px;"
+          (volume)
+          (brightness)
+          (powermenu)
+        )
+    )
+  )
+)
+
+(defwindow bar_1
+  :stacking "fg"
+  :windowtype "toolbar"
+  :geometry (geometry :x "33%" :width "67%" :y "-5px" :height "1%")
+  :style "padding-bottom: 1px"
+  (box :style "margin: 10px 5px 10px; padding: 0; border-radius: 15px;"
+    (box :space-evenly false :halign "center" :style "color: #6A7C93; font-family: FiraCode Nerd Font"
+      (button :onclick "playerctl --player=ncspot previous" "")
+      (button :style "margin: 0 20px" :onclick "playerctl --player=ncspot play-pause" song_status)
+      (button :onclick "playerctl --player=ncspot next" "")
+      (button :style "margin: 0 20px" :onclick "python ~/.config/eww/scripts/windowtoggle.py player" "${song_artist} - ${song}")
+    )
+    (box :halign "end" :space-evenly false
+        (stats)
+        (button :style "font-size: 18px; border-radius: 20px; background: #85678F; padding: 0px 20px; margin: 0 10px; font-family: FiraCode Nerd Font"
+                "󰌌 ${keyboard_layout}")
+        (button :style "font-size: 16px; border-radius: 20px; background: #5F819D; padding: 2px 15px 0; font-family: FiraCode Nerd Font"
+                :onclick "python ~/.config/eww/scripts/windowtoggle.py calendar" " ${time}")
+        (box :space-evenly false :style "padding: 0 20px 0 0; margin: 0 10px; border-radius: 20px;"
+          (volume)
+          (brightness)
+          (powermenu)
+        )
+    )
+  )
+)
+
+(defwidget workspaces []
+  (box :style "font-family: FiraCode Nerd Font Mono; font-size: 19px;" :space-evenly false 
+    (workspacebutton :number 1 :icon "")
+    (workspacebutton :number 2 :icon "")
+    (workspacebutton :number 3 :icon "")
+    (workspacebutton :number 4 :icon "")
+    (workspacebutton :number 5 :icon "󱃖")
+    (workspacebutton :number 6 :icon "󰶍")
+    (revealer :transition "slideright" :reveal {ws7-visible != ""} (workspacebutton :number 7 :icon "󰺕"))
+    (revealer :transition "slideright" :reveal {ws8-visible != ""} (workspacebutton :number 8 :icon "󰺕"))
+    (revealer :transition "slideright" :reveal {ws9-visible != ""} (workspacebutton :number 9 :icon "󰺕"))
+    (revealer :transition "slideright" :reveal {ws0-visible != ""} (workspacebutton :number 0 :icon "󰺕"))
+  )
+)
+
+(defwidget workspacebutton [number icon]
+  (overlay
+    (revealer :reveal {workspace == number}
+      (label :style "transition: 0.3s ease; border-radius: 10px; padding: 0 10px; background-color: #5D819D; color: #5D819D;" :text icon)
+    )
+    (button :style "padding: 0 10px;" :onclick "i3-msg \"workspace number ${number}\"" icon)
+  )
+)
+
+(deflisten runcat :initial "" `~/.config/eww/scripts/polycat --config-path ~/.config/eww/scripts/polycat-config.json`)
+(defwidget stats []
+  (box :space-evenly false :style "border-radius: 20px;"
+    (overlay :style "margin: 10px;" :tooltip "${round(EWW_CPU.avg, 0)}%"
+      (circular-progress :class "cpu" :start-at 75 :value "${EWW_CPU.avg}" :thickness 12)
+      (label :style "color: #181818; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
+      (label :style "color: #6A7C93; font-size: 14px; padding: 2px 1px 2px 0; font-family: runcat" :text "${runcat}")
+    )
+    (label :style "color: #181818" :text "||")
+    (overlay :style "margin: 10px;" :tooltip "${round(EWW_RAM.used_mem_perc, 0)}%"
+      (circular-progress :class "memory" :start-at 75 :value "${EWW_RAM.used_mem_perc}" :thickness 12)
+      (label :style "color: #181818; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
+      (label :style "color: #7A7C57; font-size: 11px; padding: 2px 2px 2px 0;" :text "󰨣")
+    )
+    (label :style "color: #181818" :text "||")
+    (overlay :tooltip "${round(EWW_BATTERY.BAT0.capacity, 0)}%"
+      (circular-progress :class "battery" :start-at 75 :value "${EWW_BATTERY.BAT0.capacity}" :thickness 12)
+      (label :style "color: #181818; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
+      (label :style "color: #DEA566; font-size: 13px; padding: 2px 0 2px 1px;" :text "󱐋")
+    )
+  )
+)
+
+(defvar powermenu_reveal false)
+(defwidget powermenu []
+  (eventbox :onhover "eww update powermenu_reveal=true"   :onhoverlost "eww update powermenu_reveal=false"
+    (box :space-evenly false
+      (revealer :transition "slideleft" :reveal powermenu_reveal
+        (box
+          (button :onclick "dm-tool switch-to-greeter" :style "color: #6A7C93; font-size: 24px" "󰿅  ")
+          (button :onclick "reboot" :style "color: #DEA566; font-size: 24px" "󰑓  ")
+        )
+      )
+      (button :onclick "poweroff" :style "color: #B54036; font-size: 24px" "󰐥 ")
+    )
+  )
+)
+
+(defpoll current-brightness :interval "1s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defvar brightness_reveal false)
+(defwidget brightness []
+  (eventbox :onhover "eww update brightness_reveal=true"   :onhoverlost "eww update brightness_reveal=false"
+    (box :space-evenly false
+      (revealer :transition "slideleft" :reveal brightness_reveal
+        (box
+          (scale :class "bribar"
+            :value current-brightness :tooltip "Brightness: ${current-brightness}%" :onchange "brightnessctl set {}%" 
+            :orientation "h" :max 101 :min 0
+          )
+        )
+      )
+      (button :style "color: #DEA566; font-size: 22px; padding-left: 10px;" "󰖨  ")
+    )
+  )
+)
+
+(defpoll current-volume :interval "1s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defvar volume_reveal false)
+(defwidget volume []
+  (eventbox :onhover "eww update volume_reveal=true"   :onhoverlost "eww update volume_reveal=false"
+    (box :space-evenly false
+      (revealer :transition "slideleft" :reveal volume_reveal
+        (box
+          (scale :class "volbar"
+            :value current-volume :tooltip "Volume: ${current-volume}%" :onchange "amixer -D pulse sset Master {}%" 
+            :orientation "h" :max 101 :min 0
+          )
+        )
+      )
+      (button :style "color: #6A7C93; font-size: 22px; padding-left: 10px;" "󰕾 ")
+    )
+  )
+)
+
+(defwindow player
+  :stacking "fg"
+  :windowtype "normal"
+  :geometry (geometry :x "33%" :width "33%" :y "50px")
+  (music)
+)
+
+(defpoll song :interval "0.5s"  "python ~/.config/eww/scripts/mediaplayer.py get_song")
+(defpoll song_artist :interval "0.5s"  "python ~/.config/eww/scripts/mediaplayer.py get_artist")
+(defpoll current_status :interval "0.5s"  "python ~/.config/eww/scripts/mediaplayer.py get_time")
+(defpoll song_status :interval "0.5s"  "playerctl --player=ncspot status | awk '{ if ($1 == \"Playing\") print(\"\"); if ($1 == \"Paused\") print(\"\") }'")
+(defpoll cover_art :interval "0.5s"  "playerctl --player=ncspot metadata | awk '{ for (I=1;I<NF;I++) if ($I == \"mpris:artUrl\") { print $(I+1) } }'")
+(defwidget music []
+  (box :orientation "v" :space-evenly false :class "player"
+    (box :space-evenly false
+      (box :class "song_cover_art" :width 150 :height 150 :vexpand true :hexpand false :halign "start" :valign "start"
+        :style "background-image: url('${cover_art}'); background-size: 150px; border-radius: 20px;")
+      (box :orientation "v" :halign "center" :valign "center" :space-evenly false :hexpand "true"
+        (button :class "artist" "${song_artist}") 
+        (button :class "song" "${song}")
+        (box :style "margin-top: 20px"
+          (button :class "song_btn_prev" :onclick "playerctl --player=ncspot previous" "")
+          (button :class "song_btn_play" :onclick "playerctl --player=ncspot play-pause" song_status)
+          (button :class "song_btn_next" :onclick "playerctl --player=ncspot next" "")
+        )
+        (scale :class "song-scale" :onchange "python ~/.config/eww/scripts/mediaplayer.py set_time {}" :min 0 :active "true" :max 100 :value current_status)
+      )
+    )
+    (box :orientation "v"
+      
+    )
+  )
+)
+
+(defwindow calendar
+  :stacking "fg"
+  :windowtype "normal"
+  :geometry (geometry :x "-3%" :y "50px" :anchor "top right")
+  (calendar :style "border-radius: 10px; font-size: 15px; font-weight: bold;")
+)
+;; vim:ft=yuck
