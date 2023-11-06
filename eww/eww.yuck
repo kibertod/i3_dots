@@ -12,7 +12,7 @@
   :windowtype "toolbar"
   :geometry (geometry :x "-14px" :width "101%" :y "-10px" :height "1%")
   :style "padding-bottom: 1px"
-  (centerbox :style "background: #181818; margin: 10px 5px 10px; padding: 0; padding: 0 20px;"
+  (centerbox :style "background: #000000; margin: 10px 5px 10px; padding: 0; padding: 0 20px;"
     (workspaces)
     (box :space-evenly false :halign "center" :style "color: #7A7C57; font-family: FiraCode Nerd Font"
       (button :onclick "playerctl --player=ncspot previous" "")
@@ -91,19 +91,19 @@
   (box :space-evenly false :style "border-radius: 20px;"
     (overlay :style "margin: 10px;" :tooltip "${round(EWW_CPU.avg, 0)}%"
       (circular-progress :class "cpu" :start-at 75 :value "${EWW_CPU.avg}" :thickness 12)
-      (label :style "color: #181818; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
+      (label :style "color: #000000; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
       (label :style "color: #6A7C93; font-size: 14px; padding: 2px 1px 2px 0; font-family: runcat" :text "${runcat}")
     )
-    (label :style "color: #181818" :text "||")
+    (label :style "color: #000000" :text "||")
     (overlay :style "margin: 10px;" :tooltip "${round(EWW_RAM.used_mem_perc, 0)}%"
       (circular-progress :class "memory" :start-at 75 :value "${EWW_RAM.used_mem_perc}" :thickness 12)
-      (label :style "color: #181818; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
+      (label :style "color: #000000; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
       (label :style "color: #7A7C57; font-size: 11px; padding: 2px 2px 2px 0;" :text "󰨣")
     )
-    (label :style "color: #181818" :text "||")
+    (label :style "color: #000000" :text "||")
     (overlay :tooltip "${round(EWW_BATTERY.BAT0.capacity, 0)}%"
       (circular-progress :class "battery" :start-at 75 :value "${EWW_BATTERY.BAT0.capacity}" :thickness 12)
-      (label :style "color: #181818; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
+      (label :style "color: #000000; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
       (label :style "color: #DEA566; font-size: 13px; padding: 2px 0 2px 1px;" :text "󱐋")
     )
   )

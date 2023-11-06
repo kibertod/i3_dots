@@ -47,7 +47,7 @@
                                     },
                                     "marks": [],
                                     "name": "i3-save-tree --works ~",
-                                    "percent": 0.690104166666667,
+                                    "percent": 0.670104166666667,
                                     "swallows": [
                                        {
                                         "class": "kitty-free-terminal",
@@ -62,7 +62,7 @@
                                     "floating": "auto_off",
                                     "layout": "splitv",
                                     "marks": [],
-                                    "percent": 0.309895833333333,
+                                    "percent": 0.329895833333333,
                                     "type": "con",
                                     "nodes": [
                                         {
