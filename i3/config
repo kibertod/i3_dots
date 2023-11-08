@@ -66,6 +66,7 @@ for_window [class="ru-turikhay-tlauncher-bootstrap-Bootstrap"] floating enable
 for_window [class="Minecraft"] floating enable
 for_window [class="File-roller"] floating enable
 for_window [class="selectdefaultapplication"] floating enable
+for_window [class="Cadence"] floating enable
 
 ###############################################################
 # System-related keybindings ##################################
