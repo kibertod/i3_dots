@@ -2,8 +2,9 @@
 # Style #######################################################
 ###############################################################
 
-gaps inner 16px
-gaps outer 0px
+gaps inner 16
+gaps outer 0
+
 
 default_border pixel 0
 default_floating_border pixel 0
@@ -66,7 +67,6 @@ for_window [class="ru-turikhay-tlauncher-bootstrap-Bootstrap"] floating enable
 for_window [class="Minecraft"] floating enable
 for_window [class="File-roller"] floating enable
 for_window [class="selectdefaultapplication"] floating enable
-for_window [class="Cadence"] floating enable
 
 ###############################################################
 # System-related keybindings ##################################
