@@ -182,13 +182,14 @@ foreground = '#8c629c'
 # You can define as many as 8 different colors. They range from bottom to top of screen
 gradient = 1
 gradient_count = 3
-gradient_color_1 = '#4F7498'
+gradient_color_1 = '#e4e4e8'
 ; gradient_color_2 = '#999445'
 ; gradient_color_3 = '#A7944A'
-gradient_color_2 = '#6a7c93'
+;gradient_color_2 = '#a6b9cb'
 ; gradient_color_5 = '#C49455'
 ; gradient_color_6 = '#D1945A'
-gradient_color_3 = '#e4e4e8'
+gradient_color_2 = '#4f7498'
+gradient_color_3 = '#4f7498'
 ; gradient_color_8 = '#cc3333'
 
 

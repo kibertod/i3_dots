@@ -12,21 +12,22 @@
   :windowtype "toolbar"
   :geometry (geometry :x "9px" :width "99%" :y "-5px" :height "1%")
   :style "padding-bottom: 1px"
-  (centerbox :style "background: #000000; margin: 10px 5px 10px; padding: 0; padding: 0 20px; border-radius: 30px;"
+  (centerbox :style "background: rgba(0, 0, 0, 0); margin: 10px 5px 10px; padding: 0; padding: 0 20px; border-radius: 30px;"
     (workspaces)
-    (box :space-evenly false :halign "center" :style "color: #7A7C57; font-family: FiraCode Nerd Font"
-      ;;(button :onclick "playerctl --player=ncspot previous" "")
+    (box :space-evenly false :halign "center" :style "color: #7A7C57; font-family: FiraCode Nerd Font; background: #000000; padding: 0 100px; border-radius: 20px;"
+      (button :onclick "playerctl --player=ncspot previous" "")
       ;;(button :style "margin: 0 20px" :onclick "playerctl --player=ncspot play-pause" song_status)
       ;;(button :onclick "playerctl --player=ncspot next" "")
       ;;(button :style "margin: 0 20px" :onclick "python ~/.config/eww/scripts/windowtoggle.py player" "${song_artist} - ${song}")
     )
     (box :hexpand true :halign "end" :space-evenly false
         (stats)
-        (button :style "font-size: 18px; color: #949494; border-radius: 20px; padding: 0px 5px; margin: 0 10px; font-family: FiraCode Nerd Font"
+        (button :style "font-size: 18px; color: #949494; background: #000000; border-radius: 20px; padding: 0px 10px; margin: 0 10px; font-family: FiraCode Nerd Font"
                 "󰌌 ${keyboard_layout}")
-        (button :style "font-size: 16px; color: #949494; border-radius: 20px; padding: 2px 5px 0; font-family: FiraCode Nerd Font"
+        (button :style "font-size: 16px; color: #949494; background: #000000; border-radius: 20px; padding: 2px 10px 0; font-family: FiraCode Nerd Font;
+                       margin: 0 10px 0 0;"
                 :onclick "python ~/.config/eww/scripts/windowtoggle.py calendar" " ${time}")
-        (box :space-evenly false :style "border-radius: 20px;"
+        (box :space-evenly false :style "border-radius: 20px; background: #000000; padding: 0 0 0 4px;"
           (volume)
           (brightness)
           (powermenu)
@@ -36,47 +37,50 @@
 )
 
 (defwidget workspaces []
-  (box :style "font-family: FiraCode Nerd Font Mono; font-size: 19px;" :space-evenly false 
-    (workspacebutton :number 1 :icon "")
-    (workspacebutton :number 2 :icon "")
-    (workspacebutton :number 3 :icon "")
-    (workspacebutton :number 4 :icon "")
-    (workspacebutton :number 5 :icon "󱃖")
-    (workspacebutton :number 6 :icon "󰶍")
-    (revealer :transition "slideright" :reveal {ws7-visible != ""} (workspacebutton :number 7 :icon "󰺕"))
-    (revealer :transition "slideright" :reveal {ws8-visible != ""} (workspacebutton :number 8 :icon "󰺕"))
-    (revealer :transition "slideright" :reveal {ws9-visible != ""} (workspacebutton :number 9 :icon "󰺕"))
-    (revealer :transition "slideright" :reveal {ws0-visible != ""} (workspacebutton :number 0 :icon "󰺕"))
+  (box :space-evenly false
+    (box :style "font-family: FiraCode Nerd Font Mono; font-size: 19px; border-radius: 20px; background: #000000;" :space-evenly false
+      (workspacebutton :number 1 :icon "")
+      (workspacebutton :number 2 :icon "")
+      (workspacebutton :number 3 :icon "")
+      (workspacebutton :number 4 :icon "")
+      (workspacebutton :number 5 :icon "󱃖")
+      (workspacebutton :number 6 :icon "󰶍")
+      (revealer :transition "slideright" :reveal {ws7-visible != ""} (workspacebutton :number 7 :icon "󰺕"))
+      (revealer :transition "slideright" :reveal {ws8-visible != ""} (workspacebutton :number 8 :icon "󰺕"))
+      (revealer :transition "slideright" :reveal {ws9-visible != ""} (workspacebutton :number 9 :icon "󰺕"))
+      (revealer :transition "slideright" :reveal {ws0-visible != ""} (workspacebutton :number 0 :icon "󰺕"))
+    )
   )
 )
 
 (defwidget workspacebutton [number icon]
   (overlay
+    (label :style "padding: 0 10px;" :text icon)
     (revealer :reveal {workspace == number}
-      (label :style "transition: 0.3s ease; padding: 0 10px; background-color: #5D819D; color: #5D819D;" :text icon)
+      (label :style "transition: 0.3s ease; padding: 0 10px; color: #5D81c0;" :text icon)
     )
-    (button :style "padding: 0 10px;" :onclick "i3-msg \"workspace number ${number}\"" icon)
+    (button :style "padding: 0 10px; color: rgba(0, 0, 0, 0);" :onclick "i3-msg \"workspace number ${number}\"" icon)
   )
 )
 
 (deflisten runcat :initial "" `polycat`)
 (defwidget stats []
-  (box :space-evenly false :style "border-radius: 20px;"
+  (box :space-evenly false :style "border-radius: 20px; background: #000000; padding: 0 10px 0 8px;"
     (overlay :style "margin: 10px;" :tooltip "${round(EWW_CPU.avg, 0)}%"
       (circular-progress :class "cpu" :start-at 75 :value "${EWW_CPU.avg}" :thickness 12)
-      (label :style "color: #000000; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
-      (label :style "color: #6A7C93; font-size: 14px; padding: 2px 1px 2px 0; font-family: runcat" :text "${runcat}")
+      (label :style "color: #000000; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
+      (label :style "color: #6A7C93; font-size: 14px; padding: 1px 1px 2px 0; font-family: runcat" :text "${runcat}")
     )
     (label :style "color: #000000" :text "||")
     (overlay :style "margin: 10px;" :tooltip "${round(EWW_RAM.used_mem_perc, 0)}%"
       (circular-progress :class "memory" :start-at 75 :value "${EWW_RAM.used_mem_perc}" :thickness 12)
-      (label :style "color: #000000; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
+      (label :style "color: #000000; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
       (label :style "color: #7A7C57; font-size: 11px; padding: 2px 2px 2px 0;" :text "󰨣")
     )
     (label :style "color: #000000" :text "||")
     (overlay :tooltip "${round(EWW_BATTERY.BAT0.capacity, 0)}%"
       (circular-progress :class "battery" :start-at 75 :value "${EWW_BATTERY.BAT0.capacity}" :thickness 12)
-      (label :style "color: #000000; font-size: 19px; padding: 2px 6.5px 2px 0;" :text "")
+      (label :style "color: #000000; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
       (label :style "color: #DEA566; font-size: 13px; padding: 2px 0 2px 1px;" :text "󱐋")
     )
   )
@@ -88,8 +92,8 @@
     (box :space-evenly false
       (revealer :transition "slideleft" :reveal powermenu_reveal
         (box
-          (button :onclick "dm-tool switch-to-greeter" :style "color: #6A7C93; font-size: 24px" "󰿅  ")
-          (button :onclick "reboot" :style "color: #DEA566; font-size: 24px" "󰑓  ")
+          (button :onclick "dm-tool switch-to-greeter" :style "color: #6A7C93; font-size: 24px" "󰿅 ")
+          (button :onclick "reboot" :style "color: #DEA566; font-size: 24px" "󰑓 ")
         )
       )
       (button :onclick "poweroff" :style "color: #B54036; font-size: 24px" "󰐥 ")

@@ -2,7 +2,7 @@
 # Style #######################################################
 ###############################################################
 
-gaps inner 16
+gaps inner 25
 gaps outer 0
 
 
@@ -39,7 +39,7 @@ exec nm-applet
 exec nitrogen --restore
 exec udiskie
 exec dunst
-exec picom --unredir-if-possible
+exec compfy --unredir-if-possible
 exec lxsession
 
 ###############################################################
@@ -81,8 +81,8 @@ bindsym $mod+l exec dm-tool switch-to-greeter
 ###############################################################
 
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/volumeUp.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/volumeDown.sh
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 bindsym XF86AudioPlay exec --no-startup-id playerctl play
@@ -104,8 +104,8 @@ bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection c
 # Brightness-related control ##################################
 ###############################################################
 
-bindsym XF86MonBrightnessUp exec brightnessctl set +10%
-bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
+bindsym XF86MonBrightnessUp exec ~/.config/i3/brightnessUp.sh
+bindsym XF86MonBrightnessDown exec ~/.config/i3/brightnessDown.sh
 
 ###############################################################
 # Application keybindings #####################################
