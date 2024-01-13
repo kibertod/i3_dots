@@ -28,7 +28,6 @@ workspace $ws10 output HDMI-1-1
 
 assign [class="firefox"] $ws2
 assign [class="TelegramDesktop"] $ws4
-assign [class="thunderbird"] $ws6
 
 ###############################################################
 # Startup services ############################################
@@ -39,19 +38,19 @@ exec nm-applet
 exec nitrogen --restore
 exec udiskie
 exec dunst
-exec compfy --unredir-if-possible
+exec picom --unredir-if-possible
 exec lxsession
+exec xss-lock -- "/usr/bin/betterlockscreen" -l dimblur --display 1 --span
+
 
 ###############################################################
 # Startup applications ########################################
 ###############################################################
 
 exec ~/.config/i3/restore-workspace1.sh
-exec ~/.config/i3/restore-workspace3.sh
 exec polybar
 exec --no-startup-id firefox
 exec --no-startup-id telegram-desktop
-exec --no-startup-id thunderbird
 exec --no-startup-id eww daemon && eww open bar
 
 ###############################################################
@@ -74,7 +73,7 @@ for_window [class="selectdefaultapplication"] floating enable
 
 set $mod Mod4
 
-bindsym $mod+l exec dm-tool switch-to-greeter
+bindsym $mod+l exec betterlockscreen -l dimblur --display 1 --span
 
 ###############################################################
 # Volume-related keybindings ##################################
