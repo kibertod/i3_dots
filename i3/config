@@ -2,12 +2,18 @@
 # Style #######################################################
 ###############################################################
 
-gaps inner 25
+gaps inner 15 
 gaps outer 0
 
 
-default_border pixel 0
+default_border pixel 2
+client.focused          #333333 #9f9f9f #9f9f9f #9f9f9f #9f9f9f
+client.focused_inactive #333333 #222222 #222222 #484e50 #222222
+client.unfocused        #333333 #222222 #888888 #292d2e #222222
+client.placeholder      #000000 #0c0c0c #ffffff #000000 #222222
 default_floating_border pixel 0
+smart_borders on
+smart_gaps on
 
 font pango:FiraCode Nerd Font
 

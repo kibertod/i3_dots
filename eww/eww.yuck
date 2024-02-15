@@ -11,11 +11,11 @@
   :monitor 0
   :stacking "fg"
   :windowtype "toolbar"
-  :geometry (geometry :x "0" :width "100%" :y "-5px" :height "1%")
+  :geometry (geometry :x "0" :width "100%" :y "-11px" :height "1%")
   :style "padding-bottom: 1px"
-  (centerbox :style "background: rgba(0, 0, 0, 0); margin: 10px 5px 10px; padding: 0; padding: 0 20px; border-radius: 30px;"
+  (centerbox :style "background: rgba(25, 25, 25, 1); margin: 10px 0 10px; padding: 0; padding: 0 20px; border-radius: 0;"
     (workspaces)
-    (box :space-evenly false :halign "center" :style "color: #7A7C57; font-family: FiraCode Nerd Font; background: #000000; padding: 0 100px; border-radius: 20px;"
+    (box :space-evenly false :halign "center" :style "color: #7A7C57; font-family: FiraCode Nerd Font; padding: 0 100px; border-radius: 20px;"
       (button :onclick "playerctl --player=ncspot previous" "")
       ;;(button :style "margin: 0 20px" :onclick "playerctl --player=ncspot play-pause" song_status)
       ;;(button :onclick "playerctl --player=ncspot next" "")
@@ -23,12 +23,12 @@
     )
     (box :hexpand true :halign "end" :space-evenly false
         (stats)
-        (button :style "font-size: 18px; color: #949494; background: #000000; border-radius: 20px; padding: 0px 10px; margin: 0 10px; font-family: FiraCode Nerd Font"
+        (button :style "font-size: 18px; color: #949494; background: rgba(0, 0, 0, 0); border-radius: 20px; padding: 0px 10px; margin: 0 10px; font-family: FiraCode Nerd Font"
                 "󰌌 ${keyboard_layout}")
-        (button :style "font-size: 16px; color: #949494; background: #000000; border-radius: 20px; padding: 2px 10px 0; font-family: FiraCode Nerd Font;
+        (button :style "font-size: 16px; color: #949494; background: rgba(0, 0, 0, 0); border-radius: 20px; padding: 2px 10px 0; font-family: FiraCode Nerd Font;
                        margin: 0 10px 0 0;"
                 :onclick "python ~/.config/eww/scripts/windowtoggle.py calendar" " ${time}")
-        (box :space-evenly false :style "border-radius: 20px; background: #000000; padding: 0 0 0 4px;"
+        (box :space-evenly false :style "border-radius: 20px; background: rgba(0, 0, 0, 0); padding: 0 0 0 4px;"
           (volume)
           (brightness)
           (powermenu)
@@ -39,7 +39,7 @@
 
 (defwidget workspaces []
   (box :space-evenly false
-    (box :style "font-family: FiraCode Nerd Font Mono; font-size: 19px; border-radius: 20px; background: #000000;" :space-evenly false
+    (box :style "font-family: FiraCode Nerd Font Mono; font-size: 19px; border-radius: 20px;" :space-evenly false
       (workspacebutton :number 1 :icon "")
       (workspacebutton :number 2 :icon "")
       (workspacebutton :number 3 :icon "")
@@ -66,23 +66,23 @@
 
 (deflisten runcat :initial "" `polycat`)
 (defwidget stats []
-  (box :space-evenly false :style "border-radius: 20px; background: #000000; padding: 0 10px 0 8px;"
+  (box :space-evenly false :style "border-radius: 20px; padding: 0 10px 0 8px;"
     (overlay :style "margin: 10px;" :tooltip "${round(EWW_CPU.avg, 0)}%"
       (circular-progress :class "cpu" :start-at 75 :value "${EWW_CPU.avg}" :thickness 12)
-      (label :style "color: #000000; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
-      (label :style "color: #6A7C93; font-size: 14px; padding: 1px 1px 2px 0; font-family: runcat" :text "${runcat}")
+      (label :style "color: #191919; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
+      (label :style "color: #6A7C93; font-size: 11px; padding: 1px 0.5px 2px 0; font-family: runcat" :text "${runcat}")
     )
-    (label :style "color: #000000" :text "||")
+    (label :style "color: rgba(0, 0, 0, 0)" :text "||")
     (overlay :style "margin: 10px;" :tooltip "${round(EWW_RAM.used_mem_perc, 0)}%"
       (circular-progress :class "memory" :start-at 75 :value "${EWW_RAM.used_mem_perc}" :thickness 12)
-      (label :style "color: #000000; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
-      (label :style "color: #7A7C57; font-size: 11px; padding: 2px 2px 2px 0;" :text "󰨣")
+      (label :style "color: #191919; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
+      (label :style "color: #7A7C57; font-size: 11px; padding: 2px 1px 2px 0;" :text "󰨣")
     )
-    (label :style "color: #000000" :text "||")
+    (label :style "color: rgba(0, 0, 0, 0)" :text "||")
     (overlay :tooltip "${round(EWW_BATTERY.BAT0.capacity, 0)}%"
       (circular-progress :class "battery" :start-at 75 :value "${EWW_BATTERY.BAT0.capacity}" :thickness 12)
-      (label :style "color: #000000; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
-      (label :style "color: #DEA566; font-size: 13px; padding: 2px 0 2px 1px;" :text "󱐋")
+      (label :style "color: #191919; font-size: 19px; padding: 2.5px 3px 2px 0;" :text "")
+      (label :style "color: #DEA566; font-size: 13px; padding: 2px 0 3px 1px;" :text "󱐋")
     )
   )
 )
