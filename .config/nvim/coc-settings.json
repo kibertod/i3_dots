@@ -1,0 +1,19 @@
+{
+    "outline.previewBorderRounded": true,
+    "outline.previewBorder": true,
+    "notification.border": true,
+    "suggest.floatConfig": {"border": true, "rounded": true},
+    "diagnostic.floatConfig": {"border": true, "rounded": true},
+    "signature.floatConfig": {"border": true, "rounded": true},
+    "hover.floatConfig": {"border": true, "rounded": true},
+    "inlayHint.enable": false,
+    "sql.database": "postgresql",
+    "languageserver": {
+        "csharp-ls": {
+            "command": "csharp-ls",
+            "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"],
+            "inlayHints.enable": false
+        },
+        "clangd.arguments": ["-std=c++20"],
+    },
+}
